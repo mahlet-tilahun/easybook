@@ -37,8 +37,15 @@ def create_app(config_class=Config):
     from app.routes import main
     app.register_blueprint(main)
     
-    # Create database tables
+    # Create database tables (best-effort). On platforms where the filesystem is read-only
+    # (e.g. serverless), creation may fail; catch exceptions to avoid crashing the import.
     with app.app_context():
-        db.create_all()
+        try:
+            db.create_all()
+        except Exception as e:
+            # Log a concise warning to stderr and continue. Tables may need to be created
+            # via migration or by running `init_db.py` against a proper DATABASE_URL.
+            import sys
+            print(f"WARNING: could not create DB tables: {e}", file=sys.stderr)
     
     return app
