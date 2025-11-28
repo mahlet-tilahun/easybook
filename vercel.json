@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "app.py",
+      "src": "run.py",
       "use": "@vercel/python"
     }
   ],
@@ -12,11 +12,11 @@
       "dest": "/static/$1"
     },
     {
-      "src": "/(.*)",
-      "dest": "app.py"
+      "src": "(.*)",
+      "dest": "run.py"
     }
   ],
   "env": {
-    "FLASK_APP": "app.py"
+    "FLASK_APP": "run.py"
   }
 }
