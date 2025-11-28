@@ -5,7 +5,17 @@ class Config:
     """Application configuration class"""
     
     # Secret key for session management
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
+    _default_secret = 'dev-secret-key-change-in-production'
+    _secret_key = os.environ.get('SECRET_KEY') or _default_secret
+    
+    # Warn/error if using default SECRET_KEY in production
+    if os.environ.get('FLASK_ENV') == 'production' and _secret_key == _default_secret:
+        raise ValueError(
+            "ERROR: Using default SECRET_KEY in production is not allowed! "
+            "Set a strong SECRET_KEY environment variable before deploying."
+        )
+    
+    SECRET_KEY = _secret_key
     
     # Database configuration
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))

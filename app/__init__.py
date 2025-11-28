@@ -1,10 +1,14 @@
 """
 Flask application factory
 """
+from dotenv import load_dotenv
 from flask import Flask
 from flask_login import LoginManager
 from config import Config
 from app.database import db
+
+# Load environment variables from .env file
+load_dotenv()
 
 login_manager = LoginManager()
 
