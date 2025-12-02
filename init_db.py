@@ -14,8 +14,14 @@ def init_database():
     with app.app_context():
         # Drop all tables and recreate
         print("Creating database tables...")
-        db.drop_all()
+        try:
+            db.drop_all()
+            print("Dropped existing tables (if any)")
+        except Exception as e:
+            print(f"Note: {e}")
+        
         db.create_all()
+        print("Tables created successfully!")
         
         # Create admin user
         print("Creating admin user...")
