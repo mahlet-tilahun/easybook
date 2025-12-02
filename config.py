@@ -55,7 +55,7 @@ class Config:
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
     
     # Hospital information
-    HOSPITAL_NAME = "Easybook"
+    HOSPITAL_NAME = "St. Mary's Hospital - Easybook System"
     HOSPITAL_OPERATING_HOURS = "Monday - Friday: 8:00 AM - 6:00 PM, Saturday: 9:00 AM - 3:00 PM"
     HOSPITAL_SERVICES = [
         "General Medicine",
