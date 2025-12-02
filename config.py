@@ -22,17 +22,24 @@ class Config:
     # Database configuration
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-# Get DATABASE_URL from environment
+    # Prefer DATABASE_URL if provided (Postgres or other supported DB)
     _database_url = os.environ.get('DATABASE_URL')
 
-# Fix for Heroku/some platforms that use 'postgres://' instead of 'postgresql://'
-    if _database_url and _database_url.startswith('postgres://'):
-        _database_url = _database_url.replace('postgres://', 'postgresql://', 1)
-
-# If no DATABASE_URL provided, fall back to SQLite
     if not _database_url:
+        # default path in project root
         default_sqlite_path = os.path.join(BASE_DIR, 'easybook.db')
-        _database_url = f"sqlite:///{default_sqlite_path}"
+        default_uri = f"sqlite:///{default_sqlite_path}"
+
+        # If project dir is not writable (e.g. serverless), fall back to temp dir
+        try:
+            testfile = os.path.join(BASE_DIR, '.write_test')
+            with open(testfile, 'w'):
+                pass
+            os.remove(testfile)
+            _database_url = default_uri
+        except Exception:
+            tmp_db = os.path.join(tempfile.gettempdir(), 'easybook.db')
+            _database_url = f"sqlite:///{tmp_db}"
 
     SQLALCHEMY_DATABASE_URI = _database_url
     SQLALCHEMY_TRACK_MODIFICATIONS = False
