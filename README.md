@@ -245,9 +245,8 @@ python init_db.py
 ## Performance & Scaling
 
 - **Current:** SQLite (local) or PostgreSQL (production)
-- **Caching:** None (consider Redis for high traffic)
 - **Load balancing:** Vercel handles auto-scaling
-- **Database:** PostgreSQL recommended for production (supports concurrent connections)
+- **Database:** PostgreSQL for production (supports concurrent connections)
 
 ## Future Enhancements
 
