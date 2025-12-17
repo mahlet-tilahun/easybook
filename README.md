@@ -1,5 +1,7 @@
 # Easybook - Hospital Appointment Management System
 
+**Live Demo:** [https://easybook-hospital.vercel.app/]
+
 A Flask-based web application for managing hospital appointments, doctors, schedules, and patient profiles. Patients can book appointments online, and administrators can manage the system.
 
 ## Features
